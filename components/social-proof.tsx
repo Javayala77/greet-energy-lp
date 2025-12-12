@@ -1,12 +1,14 @@
 "use client"
 
+import Image from "next/image"
+
 export default function SocialProof() {
   const partners = [
-    { name: "OGE Legal Services", logo: "🏛️" },
-    { name: "BID", logo: "🌐" },
-    { name: "Legal Group OGE", logo: "⚖️" },
-    { name: "Saving the Amazon", logo: "🌳" },
-    { name: "Bancoldex", logo: "🏦" },
+    { name: "OGE Legal Services", logo: "/images/logos_Mesa-de-trabajo-1.jpg" },
+    { name: "BID", logo: "/images/logos_Mesa-de-trabajo-1-copia.jpg" },
+    { name: "Legal Group OGE", logo: "/images/logos_Mesa-de-trabajo-1-copia-2.jpg" },
+    { name: "Saving the Amazon", logo: "/images/logos_Mesa-de-trabajo-1-copia-3.jpg" },
+    { name: "Bancoldex", logo: "/images/logos_Mesa-de-trabajo-1-copia-4.jpg" },
   ]
 
   const testimonials = [
@@ -41,10 +43,15 @@ export default function SocialProof() {
           {partners.map((partner, i) => (
             <div
               key={i}
-              className="h-16 sm:h-20 bg-background rounded-lg border border-border flex flex-col items-center justify-center text-center transition-smooth hover:border-primary/30 hover:shadow-md p-3 sm:p-4"
+              className="h-20 sm:h-24 bg-white rounded-lg border border-border flex items-center justify-center transition-smooth hover:border-primary/30 hover:shadow-md p-3 sm:p-4"
             >
-              <span className="text-2xl sm:text-3xl mb-1 sm:mb-2">{partner.logo}</span>
-              <p className="text-xs font-medium text-muted-foreground line-clamp-2">{partner.name}</p>
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={120}
+                height={60}
+                className="object-contain max-h-12 sm:max-h-16"
+              />
             </div>
           ))}
         </div>
