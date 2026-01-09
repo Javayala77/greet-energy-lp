@@ -1,6 +1,34 @@
 "use client"
 
+import { useState } from "react"
+
 export default function LeadForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+
+    try {
+      await fetch("https://formspree.io/f/mpqqawbv", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      })
+
+      // Redirigir a la URL personalizada
+      window.location.href = "https://greetenergy.com/thankyou/"
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error)
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <section id="contacto" className="w-full py-12 sm:py-16 md:py-24 bg-muted">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,7 +40,7 @@ export default function LeadForm() {
             Sin compromiso • Respuesta en menos de 24 horas
           </p>
 
-          <form action="https://formspree.io/f/xrbnkqna" method="POST" className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
               <label className="block text-xs sm:text-sm font-medium text-foreground mb-2">Nombre Completo *</label>
@@ -63,9 +91,10 @@ export default function LeadForm() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full mt-4 sm:mt-6 bg-accent text-white px-6 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg font-semibold transition-smooth hover:bg-[#1E8449] hover:shadow-lg active:scale-95"
+              disabled={isSubmitting}
+              className="w-full mt-4 sm:mt-6 bg-accent text-white px-6 py-3 sm:py-4 rounded-lg text-sm sm:text-base md:text-lg font-semibold transition-smooth hover:bg-[#1E8449] hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Solicitar Cotización Gratis →
+              {isSubmitting ? "Enviando..." : "Solicitar Cotización Gratis →"}
             </button>
           </form>
 
